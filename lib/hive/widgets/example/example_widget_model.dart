@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'example_widget_model.g.dart';
@@ -13,29 +9,24 @@ class ExampleWidgetModel {
   }
 
   void doSome() async {
-
-  const secureStorage = const FlutterSecureStorage();
-    final containsEncryptKey = await secureStorage.containsKey(key: 'key');
-    if(!containsEncryptKey){
-      final key = Hive.generateSecureKey();
-      await secureStorage.write(key: 'key', value: base64UrlEncode(key));
-    }
-    final key = await secureStorage.read(key: 'key');
-
-  final encryptionKey = base64Url.decode(key!);
-  var encryptedBox = await Hive.openBox<String>('vaultBox',encryptionCipher: HiveAesCipher(encryptionKey));
-  encryptedBox.put('secret', 'Hive is cool');
-  print(encryptedBox.get('secret'));
-
-
-
-
-
-
+    // const secureStorage = const FlutterSecureStorage();
+    // final containsEncryptKey = await secureStorage.containsKey(key: 'key');
+    // if (!containsEncryptKey) {
+    //   final key = Hive.generateSecureKey();
+    //   await secureStorage.write(key: 'key', value: base64UrlEncode(key));
+    // }
+    // final key = await secureStorage.read(key: 'key');
+    //
+    // final encryptionKey = base64Url.decode(key!);
+    // var encryptedBox = await Hive.openBox<String>('vaultBox',
+    //     encryptionCipher: HiveAesCipher(encryptionKey));
+    // encryptedBox.put('secret', 'Hive is cool');
+    // print(encryptedBox.get('secret'));
 
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(UserAdapter());
-    } if (!Hive.isAdapterRegistered(1)) {
+    }
+    if (!Hive.isAdapterRegistered(1)) {
       Hive.registerAdapter(PetAdapter());
     }
 
@@ -45,7 +36,7 @@ class ExampleWidgetModel {
     final pet1 = Pet('murzik');
     petBox.add(pet);
     petBox.add(pet1);
-    final pets = HiveList(petBox, objects: [pet,pet1]);
+    final pets = HiveList(petBox, objects: [pet, pet1]);
     final user = User(54, 'Ivan', 'Putin', pets);
     await box.put('user', user);
     print(box.values);

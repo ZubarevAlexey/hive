@@ -1,0 +1,8 @@
+  CREATE TABLE productsData (
+  id INT NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  description TEXT,
+  productImage TEXT,
+  catalog TEXT,
+  cost TEXT
+  )
